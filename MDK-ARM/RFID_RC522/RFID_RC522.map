@@ -23,6 +23,95 @@ Section Cross References
     startup_stm32f103xb.o(.text) refers to __main.o(!!!main) for __main
     startup_stm32f103xb.o(.text) refers to startup_stm32f103xb.o(HEAP) for Heap_Mem
     startup_stm32f103xb.o(.text) refers to startup_stm32f103xb.o(STACK) for Stack_Mem
+    rc522.o(.text.RC522_GetVersion) refers to rc522.o(.text.reg_io) for reg_io
+    rc522.o(.ARM.exidx.text.RC522_GetVersion) refers to rc522.o(.text.RC522_GetVersion) for [Anonymous Symbol]
+    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal.o(.text.HAL_Delay) for HAL_Delay
+    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal.o(.text.HAL_GetTick) for HAL_GetTick
+    rc522.o(.text.RC522_Init) refers to rc522.o(.text.wr) for wr
+    rc522.o(.text.RC522_Init) refers to rc522.o(.text.set_bits) for set_bits
+    rc522.o(.ARM.exidx.text.RC522_Init) refers to rc522.o(.text.RC522_Init) for [Anonymous Symbol]
+    rc522.o(.text.wr) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.wr) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.ARM.exidx.text.wr) refers to rc522.o(.text.wr) for [Anonymous Symbol]
+    rc522.o(.text.set_bits) refers to rc522.o(.text.reg_io) for reg_io
+    rc522.o(.text.set_bits) refers to rc522.o(.text.wr) for wr
+    rc522.o(.ARM.exidx.text.set_bits) refers to rc522.o(.text.set_bits) for [Anonymous Symbol]
+    rc522.o(.text.RC522_StopCrypto1) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.RC522_StopCrypto1) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.ARM.exidx.text.RC522_StopCrypto1) refers to rc522.o(.text.RC522_StopCrypto1) for [Anonymous Symbol]
+    rc522.o(.text.clear_bits) refers to rc522.o(.text.reg_io) for reg_io
+    rc522.o(.text.clear_bits) refers to rc522.o(.text.wr) for wr
+    rc522.o(.ARM.exidx.text.clear_bits) refers to rc522.o(.text.clear_bits) for [Anonymous Symbol]
+    rc522.o(.text.RC522_RunSPIDiagnostic) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.RC522_RunSPIDiagnostic) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.text.RC522_RunSPIDiagnostic) refers to stm32f1xx_hal.o(.text.HAL_Delay) for HAL_Delay
+    rc522.o(.text.RC522_RunSPIDiagnostic) refers to rc522.o(.text.reg_io) for reg_io
+    rc522.o(.text.RC522_RunSPIDiagnostic) refers to rc522.o(.text.wr) for wr
+    rc522.o(.ARM.exidx.text.RC522_RunSPIDiagnostic) refers to rc522.o(.text.RC522_RunSPIDiagnostic) for [Anonymous Symbol]
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.RC522_StopCrypto1) for RC522_StopCrypto1
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.request_a) for request_a
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.recover_rf) for recover_rf
+    rc522.o(.text.RC522_ReadUID) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.RC522_ReadUID) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.wr) for wr
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.set_bits) for set_bits
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.append_crc) for append_crc
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.crc_ok) for crc_ok
+    rc522.o(.text.RC522_ReadUID) refers to rt_memcpy_v6.o(.text) for __aeabi_memcpy
+    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.clear_bits) for clear_bits
+    rc522.o(.ARM.exidx.text.RC522_ReadUID) refers to rc522.o(.text.RC522_ReadUID) for [Anonymous Symbol]
+    rc522.o(.text.request_a) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.request_a) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.text.request_a) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.text.request_a) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
+    rc522.o(.ARM.exidx.text.request_a) refers to rc522.o(.text.request_a) for [Anonymous Symbol]
+    rc522.o(.text.recover_rf) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.recover_rf) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.text.recover_rf) refers to stm32f1xx_hal.o(.text.HAL_Delay) for HAL_Delay
+    rc522.o(.text.recover_rf) refers to rc522.o(.text.wr) for wr
+    rc522.o(.ARM.exidx.text.recover_rf) refers to rc522.o(.text.recover_rf) for [Anonymous Symbol]
+    rc522.o(.text.exchange) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
+    rc522.o(.text.exchange) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.exchange) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.text.exchange) refers to rc522.o(.text.wr) for wr
+    rc522.o(.text.exchange) refers to rc522.o(.text.set_bits) for set_bits
+    rc522.o(.text.exchange) refers to stm32f1xx_hal.o(.text.HAL_GetTick) for HAL_GetTick
+    rc522.o(.text.exchange) refers to rc522.o(.text.reg_io) for reg_io
+    rc522.o(.text.exchange) refers to rc522.o(.text.clear_bits) for clear_bits
+    rc522.o(.ARM.exidx.text.exchange) refers to rc522.o(.text.exchange) for [Anonymous Symbol]
+    rc522.o(.ARM.exidx.text.append_crc) refers to rc522.o(.text.append_crc) for [Anonymous Symbol]
+    rc522.o(.ARM.exidx.text.crc_ok) refers to rc522.o(.text.crc_ok) for [Anonymous Symbol]
+    rc522.o(.text.RC522_Halt) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.ARM.exidx.text.RC522_Halt) refers to rc522.o(.text.RC522_Halt) for [Anonymous Symbol]
+    rc522.o(.text.RC522_Poll) refers to rc522.o(.text.RC522_ReadUID) for RC522_ReadUID
+    rc522.o(.text.RC522_Poll) refers to stm32f1xx_hal.o(.text.HAL_GetTick) for HAL_GetTick
+    rc522.o(.text.RC522_Poll) refers to rc522.o(.text.recover_rf) for recover_rf
+    rc522.o(.text.RC522_Poll) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.text.RC522_Poll) refers to memcmp.o(.text) for memcmp
+    rc522.o(.text.RC522_Poll) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
+    rc522.o(.ARM.exidx.text.RC522_Poll) refers to rc522.o(.text.RC522_Poll) for [Anonymous Symbol]
+    rc522.o(.text.RC522_Authenticate) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.text.RC522_Authenticate) refers to rc522.o(.text.RC522_StopCrypto1) for RC522_StopCrypto1
+    rc522.o(.text.RC522_Authenticate) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.RC522_Authenticate) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.ARM.exidx.text.RC522_Authenticate) refers to rc522.o(.text.RC522_Authenticate) for [Anonymous Symbol]
+    rc522.o(.text.RC522_ReadBlock) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.ARM.exidx.text.RC522_ReadBlock) refers to rc522.o(.text.RC522_ReadBlock) for [Anonymous Symbol]
+    rc522.o(.text.RC522_WriteBlock) refers to rc522.o(.text.exchange) for exchange
+    rc522.o(.ARM.exidx.text.RC522_WriteBlock) refers to rc522.o(.text.RC522_WriteBlock) for [Anonymous Symbol]
+    rc522.o(.text.RC522_StatusString) refers to rc522.o(.rodata.str1.1) for .L.str.12
+    rc522.o(.ARM.exidx.text.RC522_StatusString) refers to rc522.o(.text.RC522_StatusString) for [Anonymous Symbol]
+    rc522.o(.text.RC522_DebugStageString) refers to rc522.o(.rodata.str1.1) for .L.str.12
+    rc522.o(.text.RC522_DebugStageString) refers to rc522.o(.rodata..Lswitch.table.RC522_DebugStageString) for .Lswitch.table.RC522_DebugStageString
+    rc522.o(.ARM.exidx.text.RC522_DebugStageString) refers to rc522.o(.text.RC522_DebugStageString) for [Anonymous Symbol]
+    rc522.o(.text.reg_io) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(.text.reg_io) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(.ARM.exidx.text.reg_io) refers to rc522.o(.text.reg_io) for [Anonymous Symbol]
+    rc522.o(.rodata..Lswitch.table.RC522_DebugStageString) refers to rc522.o(.rodata.str1.1) for [Anonymous Symbol]
     main.o(.text) refers (Special) to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
     main.o(.text) refers (Special) to _printf_pad.o(.text) for _printf_pre_padding
     main.o(.text) refers (Special) to _printf_s.o(.ARM.Collect$$_printf_percent$$00000014) for _printf_s
@@ -200,95 +289,6 @@ Section Cross References
     stm32f1xx_hal_msp.o(.ARM.exidx.text.HAL_UART_MspInit) refers to stm32f1xx_hal_msp.o(.text.HAL_UART_MspInit) for [Anonymous Symbol]
     stm32f1xx_hal_msp.o(.text.HAL_UART_MspDeInit) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_DeInit) for HAL_GPIO_DeInit
     stm32f1xx_hal_msp.o(.ARM.exidx.text.HAL_UART_MspDeInit) refers to stm32f1xx_hal_msp.o(.text.HAL_UART_MspDeInit) for [Anonymous Symbol]
-    rc522.o(.text.RC522_GetVersion) refers to rc522.o(.text.reg_io) for reg_io
-    rc522.o(.ARM.exidx.text.RC522_GetVersion) refers to rc522.o(.text.RC522_GetVersion) for [Anonymous Symbol]
-    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal.o(.text.HAL_Delay) for HAL_Delay
-    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.text.RC522_Init) refers to stm32f1xx_hal.o(.text.HAL_GetTick) for HAL_GetTick
-    rc522.o(.text.RC522_Init) refers to rc522.o(.text.wr) for wr
-    rc522.o(.text.RC522_Init) refers to rc522.o(.text.set_bits) for set_bits
-    rc522.o(.ARM.exidx.text.RC522_Init) refers to rc522.o(.text.RC522_Init) for [Anonymous Symbol]
-    rc522.o(.text.wr) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.wr) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.ARM.exidx.text.wr) refers to rc522.o(.text.wr) for [Anonymous Symbol]
-    rc522.o(.text.set_bits) refers to rc522.o(.text.reg_io) for reg_io
-    rc522.o(.text.set_bits) refers to rc522.o(.text.wr) for wr
-    rc522.o(.ARM.exidx.text.set_bits) refers to rc522.o(.text.set_bits) for [Anonymous Symbol]
-    rc522.o(.text.RC522_StopCrypto1) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.RC522_StopCrypto1) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.ARM.exidx.text.RC522_StopCrypto1) refers to rc522.o(.text.RC522_StopCrypto1) for [Anonymous Symbol]
-    rc522.o(.text.clear_bits) refers to rc522.o(.text.reg_io) for reg_io
-    rc522.o(.text.clear_bits) refers to rc522.o(.text.wr) for wr
-    rc522.o(.ARM.exidx.text.clear_bits) refers to rc522.o(.text.clear_bits) for [Anonymous Symbol]
-    rc522.o(.text.RC522_RunSPIDiagnostic) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.RC522_RunSPIDiagnostic) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.text.RC522_RunSPIDiagnostic) refers to stm32f1xx_hal.o(.text.HAL_Delay) for HAL_Delay
-    rc522.o(.text.RC522_RunSPIDiagnostic) refers to rc522.o(.text.reg_io) for reg_io
-    rc522.o(.text.RC522_RunSPIDiagnostic) refers to rc522.o(.text.wr) for wr
-    rc522.o(.ARM.exidx.text.RC522_RunSPIDiagnostic) refers to rc522.o(.text.RC522_RunSPIDiagnostic) for [Anonymous Symbol]
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.RC522_StopCrypto1) for RC522_StopCrypto1
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.request_a) for request_a
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.recover_rf) for recover_rf
-    rc522.o(.text.RC522_ReadUID) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.RC522_ReadUID) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.wr) for wr
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.set_bits) for set_bits
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.append_crc) for append_crc
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.crc_ok) for crc_ok
-    rc522.o(.text.RC522_ReadUID) refers to rt_memcpy_v6.o(.text) for __aeabi_memcpy
-    rc522.o(.text.RC522_ReadUID) refers to rc522.o(.text.clear_bits) for clear_bits
-    rc522.o(.ARM.exidx.text.RC522_ReadUID) refers to rc522.o(.text.RC522_ReadUID) for [Anonymous Symbol]
-    rc522.o(.text.request_a) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.request_a) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.text.request_a) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.text.request_a) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
-    rc522.o(.ARM.exidx.text.request_a) refers to rc522.o(.text.request_a) for [Anonymous Symbol]
-    rc522.o(.text.recover_rf) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.recover_rf) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.text.recover_rf) refers to stm32f1xx_hal.o(.text.HAL_Delay) for HAL_Delay
-    rc522.o(.text.recover_rf) refers to rc522.o(.text.wr) for wr
-    rc522.o(.ARM.exidx.text.recover_rf) refers to rc522.o(.text.recover_rf) for [Anonymous Symbol]
-    rc522.o(.text.exchange) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
-    rc522.o(.text.exchange) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.exchange) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.text.exchange) refers to rc522.o(.text.wr) for wr
-    rc522.o(.text.exchange) refers to rc522.o(.text.set_bits) for set_bits
-    rc522.o(.text.exchange) refers to stm32f1xx_hal.o(.text.HAL_GetTick) for HAL_GetTick
-    rc522.o(.text.exchange) refers to rc522.o(.text.reg_io) for reg_io
-    rc522.o(.text.exchange) refers to rc522.o(.text.clear_bits) for clear_bits
-    rc522.o(.ARM.exidx.text.exchange) refers to rc522.o(.text.exchange) for [Anonymous Symbol]
-    rc522.o(.ARM.exidx.text.append_crc) refers to rc522.o(.text.append_crc) for [Anonymous Symbol]
-    rc522.o(.ARM.exidx.text.crc_ok) refers to rc522.o(.text.crc_ok) for [Anonymous Symbol]
-    rc522.o(.text.RC522_Halt) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.ARM.exidx.text.RC522_Halt) refers to rc522.o(.text.RC522_Halt) for [Anonymous Symbol]
-    rc522.o(.text.RC522_Poll) refers to rc522.o(.text.RC522_ReadUID) for RC522_ReadUID
-    rc522.o(.text.RC522_Poll) refers to stm32f1xx_hal.o(.text.HAL_GetTick) for HAL_GetTick
-    rc522.o(.text.RC522_Poll) refers to rc522.o(.text.recover_rf) for recover_rf
-    rc522.o(.text.RC522_Poll) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.text.RC522_Poll) refers to memcmp.o(.text) for memcmp
-    rc522.o(.text.RC522_Poll) refers to rc522.o(.bss..L_MergedGlobals) for .L_MergedGlobals
-    rc522.o(.ARM.exidx.text.RC522_Poll) refers to rc522.o(.text.RC522_Poll) for [Anonymous Symbol]
-    rc522.o(.text.RC522_Authenticate) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.text.RC522_Authenticate) refers to rc522.o(.text.RC522_StopCrypto1) for RC522_StopCrypto1
-    rc522.o(.text.RC522_Authenticate) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.RC522_Authenticate) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.ARM.exidx.text.RC522_Authenticate) refers to rc522.o(.text.RC522_Authenticate) for [Anonymous Symbol]
-    rc522.o(.text.RC522_ReadBlock) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.ARM.exidx.text.RC522_ReadBlock) refers to rc522.o(.text.RC522_ReadBlock) for [Anonymous Symbol]
-    rc522.o(.text.RC522_WriteBlock) refers to rc522.o(.text.exchange) for exchange
-    rc522.o(.ARM.exidx.text.RC522_WriteBlock) refers to rc522.o(.text.RC522_WriteBlock) for [Anonymous Symbol]
-    rc522.o(.text.RC522_StatusString) refers to rc522.o(.rodata.str1.1) for .L.str.12
-    rc522.o(.ARM.exidx.text.RC522_StatusString) refers to rc522.o(.text.RC522_StatusString) for [Anonymous Symbol]
-    rc522.o(.text.RC522_DebugStageString) refers to rc522.o(.rodata.str1.1) for .L.str.12
-    rc522.o(.text.RC522_DebugStageString) refers to rc522.o(.rodata..Lswitch.table.RC522_DebugStageString) for .Lswitch.table.RC522_DebugStageString
-    rc522.o(.ARM.exidx.text.RC522_DebugStageString) refers to rc522.o(.text.RC522_DebugStageString) for [Anonymous Symbol]
-    rc522.o(.text.reg_io) refers to stm32f1xx_hal_gpio.o(.text.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    rc522.o(.text.reg_io) refers to stm32f1xx_hal_spi.o(.text.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    rc522.o(.ARM.exidx.text.reg_io) refers to rc522.o(.text.reg_io) for [Anonymous Symbol]
-    rc522.o(.rodata..Lswitch.table.RC522_DebugStageString) refers to rc522.o(.rodata.str1.1) for [Anonymous Symbol]
     stm32f1xx_hal_gpio_ex.o(.ARM.exidx.text.HAL_GPIOEx_ConfigEventout) refers to stm32f1xx_hal_gpio_ex.o(.text.HAL_GPIOEx_ConfigEventout) for [Anonymous Symbol]
     stm32f1xx_hal_gpio_ex.o(.ARM.exidx.text.HAL_GPIOEx_EnableEventout) refers to stm32f1xx_hal_gpio_ex.o(.text.HAL_GPIOEx_EnableEventout) for [Anonymous Symbol]
     stm32f1xx_hal_gpio_ex.o(.ARM.exidx.text.HAL_GPIOEx_DisableEventout) refers to stm32f1xx_hal_gpio_ex.o(.text.HAL_GPIOEx_DisableEventout) for [Anonymous Symbol]
@@ -1182,6 +1182,32 @@ Section Cross References
 
 Removing Unused input sections from the image.
 
+    Removing rc522.o(.text), (0 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_GetVersion), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_Init), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.wr), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.set_bits), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_StopCrypto1), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.clear_bits), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_RunSPIDiagnostic), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_ReadUID), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.request_a), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.recover_rf), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.exchange), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.append_crc), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.crc_ok), (8 bytes).
+    Removing rc522.o(.text.RC522_Halt), (108 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_Halt), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_Poll), (8 bytes).
+    Removing rc522.o(.text.RC522_Authenticate), (288 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_Authenticate), (8 bytes).
+    Removing rc522.o(.text.RC522_ReadBlock), (698 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_ReadBlock), (8 bytes).
+    Removing rc522.o(.text.RC522_WriteBlock), (772 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_WriteBlock), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_StatusString), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.RC522_DebugStageString), (8 bytes).
+    Removing rc522.o(.ARM.exidx.text.reg_io), (8 bytes).
     Removing main.o(.text), (0 bytes).
     Removing main.o(.ARM.exidx.text.main), (8 bytes).
     Removing main.o(.text.SystemClock_Config), (120 bytes).
@@ -1213,32 +1239,6 @@ Removing Unused input sections from the image.
     Removing stm32f1xx_hal_msp.o(.ARM.exidx.text.HAL_UART_MspInit), (8 bytes).
     Removing stm32f1xx_hal_msp.o(.text.HAL_UART_MspDeInit), (46 bytes).
     Removing stm32f1xx_hal_msp.o(.ARM.exidx.text.HAL_UART_MspDeInit), (8 bytes).
-    Removing rc522.o(.text), (0 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_GetVersion), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_Init), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.wr), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.set_bits), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_StopCrypto1), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.clear_bits), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_RunSPIDiagnostic), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_ReadUID), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.request_a), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.recover_rf), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.exchange), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.append_crc), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.crc_ok), (8 bytes).
-    Removing rc522.o(.text.RC522_Halt), (108 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_Halt), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_Poll), (8 bytes).
-    Removing rc522.o(.text.RC522_Authenticate), (288 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_Authenticate), (8 bytes).
-    Removing rc522.o(.text.RC522_ReadBlock), (698 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_ReadBlock), (8 bytes).
-    Removing rc522.o(.text.RC522_WriteBlock), (772 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_WriteBlock), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_StatusString), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.RC522_DebugStageString), (8 bytes).
-    Removing rc522.o(.ARM.exidx.text.reg_io), (8 bytes).
     Removing stm32f1xx_hal_gpio_ex.o(.text), (0 bytes).
     Removing stm32f1xx_hal_gpio_ex.o(.text.HAL_GPIOEx_ConfigEventout), (20 bytes).
     Removing stm32f1xx_hal_gpio_ex.o(.ARM.exidx.text.HAL_GPIOEx_ConfigEventout), (8 bytes).
@@ -2184,11 +2184,11 @@ Image Symbol Table
     [Anonymous Symbol]                       0x0800473c   Section        0  stm32f1xx_hal_rcc.o(.rodata.HAL_RCC_GetSysClockFreq.aPredivFactorTable)
     HAL_RCC_GetSysClockFreq.aPLLMULFactorTable 0x0800473e   Data          16  stm32f1xx_hal_rcc.o(.rodata.cst16)
     [Anonymous Symbol]                       0x0800473e   Section        0  stm32f1xx_hal_rcc.o(.rodata.cst16)
-    .L.str.3                                 0x0800474e   Data          71  main.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800474e   Section        0  main.o(.rodata.str1.1)
-    .L.str.5                                 0x08004795   Data           6  main.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800479b   Section        0  rc522.o(.rodata.str1.1)
-    .L.str.12                                0x080047fe   Data           8  rc522.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0800474e   Section        0  rc522.o(.rodata.str1.1)
+    .L.str.12                                0x080047b1   Data           8  rc522.o(.rodata.str1.1)
+    .L.str.3                                 0x08004818   Data          71  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08004818   Section        0  main.o(.rodata.str1.1)
+    .L.str.5                                 0x0800485f   Data           6  main.o(.rodata.str1.1)
     .L_MergedGlobals                         0x20000000   Data           3  main.o(.data..L_MergedGlobals)
     [Anonymous Symbol]                       0x20000000   Section        0  main.o(.data..L_MergedGlobals)
     .L_MergedGlobals                         0x20000004   Data           8  stm32f1xx_hal.o(.data..L_MergedGlobals)
@@ -2579,9 +2579,9 @@ Memory Map of the image
     0x08000858   0x08000858   0x00000002   Code   RO         1139    .text               c_w.l(use_no_semi.o)
     0x0800085a   0x0800085a   0x00000000   Code   RO         1141    .text               c_w.l(indicate_semi.o)
     0x0800085a   0x0800085a   0x00000002   PAD
-    0x0800085c   0x0800085c   0x00000002   Code   RO           38    .text.BusFault_Handler  stm32f1xx_it.o
+    0x0800085c   0x0800085c   0x00000002   Code   RO           91    .text.BusFault_Handler  stm32f1xx_it.o
     0x0800085e   0x0800085e   0x00000002   PAD
-    0x08000860   0x08000860   0x00000002   Code   RO           44    .text.DebugMon_Handler  stm32f1xx_it.o
+    0x08000860   0x08000860   0x00000002   Code   RO           97    .text.DebugMon_Handler  stm32f1xx_it.o
     0x08000862   0x08000862   0x00000002   PAD
     0x08000864   0x08000864   0x00000028   Code   RO          308    .text.HAL_Delay     stm32f1xx_hal.o
     0x0800088c   0x0800088c   0x0000020e   Code   RO          400    .text.HAL_GPIO_Init  stm32f1xx_hal_gpio.o
@@ -2591,14 +2591,14 @@ Memory Map of the image
     0x08000ab6   0x08000ab6   0x00000002   PAD
     0x08000ab8   0x08000ab8   0x0000000c   Code   RO          300    .text.HAL_GetTick   stm32f1xx_hal.o
     0x08000ac4   0x08000ac4   0x00000164   Code   RO          150    .text.HAL_I2C_Init  stm32f1xx_hal_i2c.o
-    0x08000c28   0x08000c28   0x0000006a   Code   RO           59    .text.HAL_I2C_MspInit  stm32f1xx_hal_msp.o
+    0x08000c28   0x08000c28   0x0000006a   Code   RO          112    .text.HAL_I2C_MspInit  stm32f1xx_hal_msp.o
     0x08000c92   0x08000c92   0x00000002   PAD
     0x08000c94   0x08000c94   0x0000001a   Code   RO          298    .text.HAL_IncTick   stm32f1xx_hal.o
     0x08000cae   0x08000cae   0x00000002   PAD
     0x08000cb0   0x08000cb0   0x00000026   Code   RO          288    .text.HAL_Init      stm32f1xx_hal.o
     0x08000cd6   0x08000cd6   0x00000002   PAD
     0x08000cd8   0x08000cd8   0x00000048   Code   RO          290    .text.HAL_InitTick  stm32f1xx_hal.o
-    0x08000d20   0x08000d20   0x00000042   Code   RO           57    .text.HAL_MspInit   stm32f1xx_hal_msp.o
+    0x08000d20   0x08000d20   0x00000042   Code   RO          110    .text.HAL_MspInit   stm32f1xx_hal_msp.o
     0x08000d62   0x08000d62   0x00000002   PAD
     0x08000d64   0x08000d64   0x00000056   Code   RO          458    .text.HAL_NVIC_SetPriority  stm32f1xx_hal_cortex.o
     0x08000dba   0x08000dba   0x00000002   PAD
@@ -2615,70 +2615,70 @@ Memory Map of the image
     0x080011ee   0x080011ee   0x00000002   PAD
     0x080011f0   0x080011f0   0x00000400   Code   RO          350    .text.HAL_RCC_OscConfig  stm32f1xx_hal_rcc.o
     0x080015f0   0x080015f0   0x000000f0   Code   RO          621    .text.HAL_RTC_Init  stm32f1xx_hal_rtc.o
-    0x080016e0   0x080016e0   0x00000046   Code   RO           63    .text.HAL_RTC_MspInit  stm32f1xx_hal_msp.o
+    0x080016e0   0x080016e0   0x00000046   Code   RO          116    .text.HAL_RTC_MspInit  stm32f1xx_hal_msp.o
     0x08001726   0x08001726   0x00000002   PAD
     0x08001728   0x08001728   0x00000208   Code   RO          639    .text.HAL_RTC_SetDate  stm32f1xx_hal_rtc.o
     0x08001930   0x08001930   0x00000160   Code   RO          631    .text.HAL_RTC_SetTime  stm32f1xx_hal_rtc.o
     0x08001a90   0x08001a90   0x000000a8   Code   RO          703    .text.HAL_SPI_Init  stm32f1xx_hal_spi.o
-    0x08001b38   0x08001b38   0x0000007a   Code   RO           67    .text.HAL_SPI_MspInit  stm32f1xx_hal_msp.o
+    0x08001b38   0x08001b38   0x0000007a   Code   RO          120    .text.HAL_SPI_MspInit  stm32f1xx_hal_msp.o
     0x08001bb2   0x08001bb2   0x00000002   PAD
     0x08001bb4   0x08001bb4   0x000002d2   Code   RO          715    .text.HAL_SPI_TransmitReceive  stm32f1xx_hal_spi.o
     0x08001e86   0x08001e86   0x00000002   PAD
     0x08001e88   0x08001e88   0x0000002c   Code   RO          468    .text.HAL_SYSTICK_Config  stm32f1xx_hal_cortex.o
     0x08001eb4   0x08001eb4   0x000000e2   Code   RO          817    .text.HAL_UART_Init  stm32f1xx_hal_uart.o
     0x08001f96   0x08001f96   0x00000002   PAD
-    0x08001f98   0x08001f98   0x0000007e   Code   RO           71    .text.HAL_UART_MspInit  stm32f1xx_hal_msp.o
+    0x08001f98   0x08001f98   0x0000007e   Code   RO          124    .text.HAL_UART_MspInit  stm32f1xx_hal_msp.o
     0x08002016   0x08002016   0x00000002   PAD
     0x08002018   0x08002018   0x00000192   Code   RO          831    .text.HAL_UART_Transmit  stm32f1xx_hal_uart.o
     0x080021aa   0x080021aa   0x00000002   PAD
-    0x080021ac   0x080021ac   0x00000002   Code   RO           34    .text.HardFault_Handler  stm32f1xx_it.o
+    0x080021ac   0x080021ac   0x00000002   Code   RO           87    .text.HardFault_Handler  stm32f1xx_it.o
     0x080021ae   0x080021ae   0x00000002   PAD
-    0x080021b0   0x080021b0   0x00000002   Code   RO           36    .text.MemManage_Handler  stm32f1xx_it.o
+    0x080021b0   0x080021b0   0x00000002   Code   RO           89    .text.MemManage_Handler  stm32f1xx_it.o
     0x080021b2   0x080021b2   0x00000002   PAD
-    0x080021b4   0x080021b4   0x00000002   Code   RO           32    .text.NMI_Handler   stm32f1xx_it.o
+    0x080021b4   0x080021b4   0x00000002   Code   RO           85    .text.NMI_Handler   stm32f1xx_it.o
     0x080021b6   0x080021b6   0x00000002   PAD
-    0x080021b8   0x080021b8   0x00000002   Code   RO           46    .text.PendSV_Handler  stm32f1xx_it.o
+    0x080021b8   0x080021b8   0x00000002   Code   RO           99    .text.PendSV_Handler  stm32f1xx_it.o
     0x080021ba   0x080021ba   0x00000002   PAD
-    0x080021bc   0x080021bc   0x0000001c   Code   RO          121    .text.RC522_DebugStageString  rc522.o
-    0x080021d8   0x080021d8   0x0000002e   Code   RO           83    .text.RC522_GetVersion  rc522.o
+    0x080021bc   0x080021bc   0x0000001c   Code   RO           49    .text.RC522_DebugStageString  rc522.o
+    0x080021d8   0x080021d8   0x0000002e   Code   RO           11    .text.RC522_GetVersion  rc522.o
     0x08002206   0x08002206   0x00000002   PAD
-    0x08002208   0x08002208   0x00000298   Code   RO           85    .text.RC522_Init    rc522.o
-    0x080024a0   0x080024a0   0x00000148   Code   RO          111    .text.RC522_Poll    rc522.o
-    0x080025e8   0x080025e8   0x0000045c   Code   RO           97    .text.RC522_ReadUID  rc522.o
-    0x08002a44   0x08002a44   0x000004e0   Code   RO           95    .text.RC522_RunSPIDiagnostic  rc522.o
-    0x08002f24   0x08002f24   0x00000044   Code   RO          119    .text.RC522_StatusString  rc522.o
-    0x08002f68   0x08002f68   0x000000ca   Code   RO           91    .text.RC522_StopCrypto1  rc522.o
+    0x08002208   0x08002208   0x00000298   Code   RO           13    .text.RC522_Init    rc522.o
+    0x080024a0   0x080024a0   0x00000148   Code   RO           39    .text.RC522_Poll    rc522.o
+    0x080025e8   0x080025e8   0x0000045c   Code   RO           25    .text.RC522_ReadUID  rc522.o
+    0x08002a44   0x08002a44   0x000004e0   Code   RO           23    .text.RC522_RunSPIDiagnostic  rc522.o
+    0x08002f24   0x08002f24   0x00000044   Code   RO           47    .text.RC522_StatusString  rc522.o
+    0x08002f68   0x08002f68   0x000000ca   Code   RO           19    .text.RC522_StopCrypto1  rc522.o
     0x08003032   0x08003032   0x00000002   PAD
     0x08003034   0x08003034   0x00000120   Code   RO          807    .text.SPI_WaitFlagStateUntilTimeout  stm32f1xx_hal_spi.o
-    0x08003154   0x08003154   0x00000002   Code   RO           42    .text.SVC_Handler   stm32f1xx_it.o
+    0x08003154   0x08003154   0x00000002   Code   RO           95    .text.SVC_Handler   stm32f1xx_it.o
     0x08003156   0x08003156   0x00000002   PAD
-    0x08003158   0x08003158   0x00000004   Code   RO           48    .text.SysTick_Handler  stm32f1xx_it.o
+    0x08003158   0x08003158   0x00000004   Code   RO          101    .text.SysTick_Handler  stm32f1xx_it.o
     0x0800315c   0x0800315c   0x00000002   Code   RO          937    .text.SystemInit    system_stm32f1xx.o
     0x0800315e   0x0800315e   0x00000002   PAD
-    0x08003160   0x08003160   0x00000002   Code   RO           40    .text.UsageFault_Handler  stm32f1xx_it.o
+    0x08003160   0x08003160   0x00000002   Code   RO           93    .text.UsageFault_Handler  stm32f1xx_it.o
     0x08003162   0x08003162   0x00000002   PAD
-    0x08003164   0x08003164   0x00000120   Code   RO          105    .text.append_crc    rc522.o
-    0x08003284   0x08003284   0x00000034   Code   RO           93    .text.clear_bits    rc522.o
-    0x080032b8   0x080032b8   0x00000140   Code   RO          107    .text.crc_ok        rc522.o
-    0x080033f8   0x080033f8   0x000004c4   Code   RO          103    .text.exchange      rc522.o
-    0x080038bc   0x080038bc   0x00000788   Code   RO           11    .text.main          main.o
-    0x08004044   0x08004044   0x0000038e   Code   RO          101    .text.recover_rf    rc522.o
+    0x08003164   0x08003164   0x00000120   Code   RO           33    .text.append_crc    rc522.o
+    0x08003284   0x08003284   0x00000034   Code   RO           21    .text.clear_bits    rc522.o
+    0x080032b8   0x080032b8   0x00000140   Code   RO           35    .text.crc_ok        rc522.o
+    0x080033f8   0x080033f8   0x000004c4   Code   RO           31    .text.exchange      rc522.o
+    0x080038bc   0x080038bc   0x00000788   Code   RO           64    .text.main          main.o
+    0x08004044   0x08004044   0x0000038e   Code   RO           29    .text.recover_rf    rc522.o
     0x080043d2   0x080043d2   0x00000002   PAD
-    0x080043d4   0x080043d4   0x000000c4   Code   RO          123    .text.reg_io        rc522.o
-    0x08004498   0x08004498   0x00000148   Code   RO           99    .text.request_a     rc522.o
-    0x080045e0   0x080045e0   0x00000034   Code   RO           89    .text.set_bits      rc522.o
-    0x08004614   0x08004614   0x00000072   Code   RO           87    .text.wr            rc522.o
+    0x080043d4   0x080043d4   0x000000c4   Code   RO           51    .text.reg_io        rc522.o
+    0x08004498   0x08004498   0x00000148   Code   RO           27    .text.request_a     rc522.o
+    0x080045e0   0x080045e0   0x00000034   Code   RO           17    .text.set_bits      rc522.o
+    0x08004614   0x08004614   0x00000072   Code   RO           15    .text.wr            rc522.o
     0x08004686   0x08004686   0x0000000e   Code   RO          996    i._is_digit         c_w.l(__printf_wp.o)
     0x08004694   0x08004694   0x00000028   Data   RO          969    .constdata          c_w.l(_printf_hex_int.o)
     0x080046bc   0x080046bc   0x00000011   Data   RO          999    .constdata          c_w.l(__printf_flags_wp.o)
     0x080046cd   0x080046cd   0x00000003   PAD
-    0x080046d0   0x080046d0   0x00000054   Data   RO          126    .rodata..Lswitch.table.RC522_DebugStageString  rc522.o
+    0x080046d0   0x080046d0   0x00000054   Data   RO           54    .rodata..Lswitch.table.RC522_DebugStageString  rc522.o
     0x08004724   0x08004724   0x00000010   Data   RO          942    .rodata.AHBPrescTable  system_stm32f1xx.o
     0x08004734   0x08004734   0x00000008   Data   RO          943    .rodata.APBPrescTable  system_stm32f1xx.o
     0x0800473c   0x0800473c   0x00000002   Data   RO          377    .rodata.HAL_RCC_GetSysClockFreq.aPredivFactorTable  stm32f1xx_hal_rcc.o
     0x0800473e   0x0800473e   0x00000010   Data   RO          376    .rodata.cst16       stm32f1xx_hal_rcc.o
-    0x0800474e   0x0800474e   0x0000004d   Data   RO           19    .rodata.str1.1      main.o
-    0x0800479b   0x0800479b   0x000000ca   Data   RO          125    .rodata.str1.1      rc522.o
+    0x0800474e   0x0800474e   0x000000ca   Data   RO           53    .rodata.str1.1      rc522.o
+    0x08004818   0x08004818   0x0000004d   Data   RO           72    .rodata.str1.1      main.o
     0x08004865   0x08004865   0x00000003   PAD
     0x08004868   0x08004868   0x00000020   Data   RO         1197    Region$$Table       anon$$obj.o
 
@@ -2687,18 +2687,18 @@ Memory Map of the image
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08004888   0x00000003   Data   RW           21    .data..L_MergedGlobals  main.o
+    0x20000000   0x08004888   0x00000003   Data   RW           74    .data..L_MergedGlobals  main.o
     0x20000003   0x0800488b   0x00000001   PAD
     0x20000004   0x0800488c   0x00000008   Data   RW          339    .data..L_MergedGlobals  stm32f1xx_hal.o
     0x2000000c   0x08004894   0x00000004   Data   RW          941    .data.SystemCoreClock  system_stm32f1xx.o
     0x20000010        -       0x00000060   Zero   RW         1062    .bss                c_w.l(libspace.o)
-    0x20000070        -       0x00000007   Zero   RW          127    .bss..L_MergedGlobals  rc522.o
+    0x20000070        -       0x00000007   Zero   RW           55    .bss..L_MergedGlobals  rc522.o
     0x20000077   0x08004898   0x00000001   PAD
-    0x20000078        -       0x0000005a   Zero   RW           22    .bss..L_MergedGlobals.7  main.o
+    0x20000078        -       0x0000005a   Zero   RW           75    .bss..L_MergedGlobals.7  main.o
     0x200000d2   0x08004898   0x00000002   PAD
-    0x200000d4        -       0x00000078   Zero   RW           23    .bss..L_MergedGlobals.8  main.o
-    0x2000014c        -       0x00000054   Zero   RW           18    .bss.hi2c1          main.o
-    0x200001a0        -       0x00000058   Zero   RW           17    .bss.hspi1          main.o
+    0x200000d4        -       0x00000078   Zero   RW           76    .bss..L_MergedGlobals.8  main.o
+    0x2000014c        -       0x00000054   Zero   RW           71    .bss.hi2c1          main.o
+    0x200001a0        -       0x00000058   Zero   RW           70    .bss.hspi1          main.o
     0x200001f8        -       0x00000004   Zero   RW          338    .bss.uwTick         stm32f1xx_hal.o
     0x200001fc   0x08004898   0x00000004   PAD
     0x20000200        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f103xb.o
