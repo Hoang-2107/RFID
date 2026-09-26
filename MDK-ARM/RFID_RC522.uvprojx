@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../../Lib/lib</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\..\Lib\lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -408,6 +408,16 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc522.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Lib\lib\rc522.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc522.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Lib\lib\rc522.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -707,21 +717,6 @@
               <FileName>system_stm32f1xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/system_stm32f1xx.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Lib</GroupName>
-          <Files>
-            <File>
-              <FileName>rc522.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Lib\lib\rc522.c</FilePath>
-            </File>
-            <File>
-              <FileName>rc522.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Lib\lib\rc522.h</FilePath>
             </File>
           </Files>
         </Group>
