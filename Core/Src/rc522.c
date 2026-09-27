@@ -277,7 +277,6 @@ static RC522_Status exchange(
     RC522_Status result = RC522_TIMEOUT;
     RC522_Status s;
 
-    /* Capacity is input only. Never report it as a received length on error. */
     if (rx_len) *rx_len = 0;
     if (rx_last_bits) *rx_last_bits = 0;
     rc522_debug_rx_len = 0;
@@ -297,22 +296,14 @@ static RC522_Status exchange(
     TRY(wr(d, COMMAND, CMD_IDLE));
     TRY(wr(d, COM_IRQ, 0x7F));
     TRY(wr(d, FIFO_LEVEL, 0x80));
-		/* Reset BitFraming before every RF command */
-		TRY(wr(
-				d,
-				BIT_FRAMING,
-				0x00
-));
+    TRY(wr(d, BIT_FRAMING, 0x00));
+
     for (uint8_t i = 0; i < tx_len; i++)
         TRY(wr(d, FIFO_DATA, tx[i]));
-  TRY(wr(
-    d,
-    BIT_FRAMING,
-    (uint8_t)(tx_last_bits & 0x07)
-));
 
-
+    TRY(wr(d, BIT_FRAMING, (uint8_t)(tx_last_bits & 0x07)));
     TRY(wr(d, COMMAND, command));
+
     if (command == CMD_TRANSCEIVE)
     {
         s = set_bits(d, BIT_FRAMING, 0x80);
@@ -327,55 +318,75 @@ static RC522_Status exchange(
     while ((uint32_t)(HAL_GetTick() - start) < d->command_timeout_ms)
     {
         s = rd(d, COM_IRQ, &irq);
-        if (s != RC522_OK) { result = s; break; }
+        if (s != RC522_OK)
+        {
+            result = s;
+            break;
+        }
+
         rc522_debug_irq = irq;
 
-        /* A completed frame/authentication takes priority over a timer flag
-         * observed in the same read. Frame errors are checked below. */
+        if (irq & 0x01)
+        {
+            result = RC522_TIMEOUT;
+            break;
+        }
+
         if ((command == CMD_MFAUTHENT && (irq & 0x10)) ||
             (command == CMD_TRANSCEIVE && (irq & 0x20)))
         {
             result = RC522_OK;
             break;
         }
-        if (irq & 0x02) { result = RC522_PROTOCOL_ERROR; break; }
-        if (irq & 0x01) { result = RC522_TIMEOUT; break; }
     }
 
-    if (result == RC522_IO_ERROR)
-    {
-        (void)wr(d, COMMAND, CMD_IDLE);
-        (void)clear_bits(d, BIT_FRAMING, 0x80);
-        return result;
-    }
-
-    /* Capture registers BEFORE any return on RF errors, and before issuing
-     * Idle: a new command may clear the error bits of the previous command. */
     s = rd(d, ERROR_REG, &err);
     if (s == RC522_OK) s = rd(d, FIFO_LEVEL, &fifo_count);
     if (s == RC522_OK) s = rd(d, CONTROL, &control);
     if (s != RC522_OK)
     {
         (void)wr(d, COMMAND, CMD_IDLE);
-        (void)clear_bits(d, BIT_FRAMING, 0x80);
+        if (command == CMD_TRANSCEIVE)
+            (void)clear_bits(d, BIT_FRAMING, 0x80);
         return s;
     }
+
     rc522_debug_error_reg = err;
     rc522_debug_rx_len = fifo_count;
     rc522_debug_last_bits = (uint8_t)(control & 0x07);
     rc522_debug_registers_valid = 1;
+
     if (rx_len) *rx_len = fifo_count;
     if (rx_last_bits) *rx_last_bits = (uint8_t)(control & 0x07);
 
-    if (command == CMD_TRANSCEIVE &&
-        (result == RC522_OK || result == RC522_PROTOCOL_ERROR))
+    if (err != 0U)
     {
-        s = transceive_error_status(err);
-        if (s != RC522_OK)
-            result = s;
+        if (err & ERROR_COLLISION)
+            result = RC522_COLLISION;
+        else if (err & ERROR_CRC)
+            result = RC522_CRC_ERROR;
+        else if (err & (ERROR_PARITY | ERROR_PROTOCOL | ERROR_BUFFER_OVERFLOW))
+            result = RC522_PROTOCOL_ERROR;
+        else if (err & ERROR_WRITE)
+            result = RC522_DEVICE_ERROR;
+        else if (err & ERROR_TEMPERATURE)
+            result = RC522_DEVICE_ERROR;
+        else
+            result = RC522_PROTOCOL_ERROR;
+    }
+    else if (command == CMD_TRANSCEIVE && fifo_count > capacity)
+    {
+        result = RC522_PROTOCOL_ERROR;
+    }
+    else if (result == RC522_TIMEOUT)
+    {
+        result = RC522_TIMEOUT;
+    }
+    else if (command == CMD_TRANSCEIVE && fifo_count == 0U)
+    {
+        result = RC522_PROTOCOL_ERROR;
     }
 
-    /* Do not turn a timeout or frame error into a successful FIFO read. */
     if (result != RC522_OK)
     {
         (void)wr(d, COMMAND, CMD_IDLE);
@@ -384,32 +395,34 @@ static RC522_Status exchange(
         return result;
     }
 
-    /* Authentication completes through Status2; it has no RX frame. */
     if (command == CMD_MFAUTHENT)
     {
-        return wr(d, COMMAND, CMD_IDLE);
+        (void)wr(d, COMMAND, CMD_IDLE);
+        return RC522_OK;
     }
 
-    /* Read FIFO immediately */
-		if (fifo_count == 0 || fifo_count > capacity)
-		{
-				(void)wr(d, COMMAND, CMD_IDLE);
-				(void)clear_bits(d, BIT_FRAMING, 0x80);
-				return RC522_PROTOCOL_ERROR;
-		}
+    if (fifo_count == 0U || fifo_count > capacity)
+    {
+        (void)wr(d, COMMAND, CMD_IDLE);
+        (void)clear_bits(d, BIT_FRAMING, 0x80);
+        return RC522_PROTOCOL_ERROR;
+    }
 
-		for (uint8_t i = 0; i < fifo_count; i++)
-		{
-				TRY(rd(d, FIFO_DATA, &rx[i]));
-		}
+    for (uint8_t i = 0; i < fifo_count; i++)
+    {
+        s = rd(d, FIFO_DATA, &rx[i]);
+        if (s != RC522_OK)
+        {
+            (void)wr(d, COMMAND, CMD_IDLE);
+            (void)clear_bits(d, BIT_FRAMING, 0x80);
+            return RC522_IO_ERROR;
+        }
+    }
 
+    TRY(wr(d, COMMAND, CMD_IDLE));
+    TRY(clear_bits(d, BIT_FRAMING, 0x80));
 
-		/* Now stop command */
-		TRY(wr(d, COMMAND, CMD_IDLE));
-
-		TRY(clear_bits(d, BIT_FRAMING, 0x80));
-
-		return RC522_OK;
+    return RC522_OK;
 }
 
 
@@ -750,21 +763,24 @@ RC522_Status RC522_ReadUID(
 
     s = request_a(d, 0x26, atqa);
 
-    /* A removed card can leave a short, incomplete RF frame instead of a
-     * clean timer timeout. Treat that as absence and try WUPA once. */
-    if (s == RC522_TIMEOUT ||
-        (s == RC522_PROTOCOL_ERROR && rc522_debug_rx_len < 2U))
+    if (s == RC522_TIMEOUT)
         s = request_a(d, 0x52, atqa);
 
-    if (s == RC522_TIMEOUT ||
-        (s == RC522_PROTOCOL_ERROR && rc522_debug_rx_len < 2U))
+    if (s == RC522_TIMEOUT)
     {
-        (void)recover_rf(d);
+        RC522_Status recover_status = recover_rf(d);
+        if (recover_status != RC522_OK)
+            return recover_status;
         return RC522_NO_CARD;
     }
 
     if (s != RC522_OK)
+    {
+        RC522_Status recover_status = recover_rf(d);
+        if (recover_status != RC522_OK)
+            return recover_status;
         return s;
+    }
 
     rc522_debug_stage = RC522_DBG_ATQA;
 
@@ -958,7 +974,6 @@ RC522_Status RC522_Poll(
 
     RC522_UID current;
     RC522_Status s = RC522_ReadUID(d, &current);
-
     uint32_t now = HAL_GetTick();
 
     if (s == RC522_NO_CARD)
@@ -967,6 +982,7 @@ RC522_Status RC522_Poll(
         {
             d->absent_pending = 1;
             d->absent_since = now;
+            return RC522_NO_CARD;
         }
 
         if ((uint32_t)(now - d->absent_since) >= d->removal_ms)
@@ -978,10 +994,7 @@ RC522_Status RC522_Poll(
     d->absent_pending = 0;
 
     if (s != RC522_OK)
-    {
-        (void)recover_rf(d);
         return s;
-    }
 
     s = RC522_Halt(d);
     if (s != RC522_OK)

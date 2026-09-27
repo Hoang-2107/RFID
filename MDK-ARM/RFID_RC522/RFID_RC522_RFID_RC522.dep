@@ -1,9 +1,9 @@
 Dependencies for Project 'RFID_RC522', Target 'RFID_RC522': (DO NOT MODIFY !)
 CompilerVersion: 6220000::V6.22::ARMCLANG
-F (startup_stm32f103xb.s)(0x6AB92030)(--target=arm-arm-none-eabi -mcpu=cortex-m3 -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-Wa,armasm,--pd,"__UVISION_VERSION SETA 540" -Wa,armasm,--pd,"STM32F10X_MD SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o rfid_rc522/startup_stm32f103xb.o)
-F (../Core/Src/rc522.c)(0x6AB9214B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/Src-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-D__UVISION_VERSION="540" -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o rfid_rc522/rc522.o -MMD)
-I (..\Core\Inc\rc522.h)(0x6AB9214B)
-I (..\Core\Inc\main.h)(0x6AB9202E)
+F (startup_stm32f103xb.s)(0x6AB94FEE)(--target=arm-arm-none-eabi -mcpu=cortex-m3 -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-Wa,armasm,--pd,"__UVISION_VERSION SETA 540" -Wa,armasm,--pd,"STM32F10X_MD SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o rfid_rc522/startup_stm32f103xb.o)
+F (../Core/Src/rc522.c)(0x6AB950FD)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/Src-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-D__UVISION_VERSION="540" -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o rfid_rc522/rc522.o -MMD)
+I (..\Core\Inc\rc522.h)(0x6AB95103)
+I (..\Core\Inc\main.h)(0x6AB95187)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x6A7B308D)
 I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x6AB7B0A5)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x6A7B308D)
@@ -28,9 +28,9 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rtc.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rtc_ex.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_spi.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x6A7B308D)
-F (../Core/Inc/rc522.h)(0x6AB9214B)()
-F (../Core/Src/main.c)(0x6AB9214B)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/Src-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-D__UVISION_VERSION="540" -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o rfid_rc522/main.o -MMD)
-I (..\Core\Inc\main.h)(0x6AB9202E)
+F (../Core/Inc/rc522.h)(0x6AB95103)()
+F (../Core/Src/main.c)(0x6AB95201)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/Src-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-D__UVISION_VERSION="540" -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o rfid_rc522/main.o -MMD)
+I (..\Core\Inc\main.h)(0x6AB95187)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x6A7B308D)
 I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x6AB7B0A5)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x6A7B308D)
@@ -55,9 +55,9 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rtc.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rtc_ex.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_spi.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x6A7B308D)
-I (..\Core\Inc\rc522.h)(0x6AB9214B)
+I (..\Core\Inc\rc522.h)(0x6AB95103)
 F (../Core/Src/stm32f1xx_it.c)(0x6AB68742)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/Src-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-D__UVISION_VERSION="540" -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o rfid_rc522/stm32f1xx_it.o -MMD)
-I (..\Core\Inc\main.h)(0x6AB9202E)
+I (..\Core\Inc\main.h)(0x6AB95187)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x6A7B308D)
 I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x6AB7B0A5)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x6A7B308D)
@@ -84,7 +84,7 @@ I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_spi.h)(0x6A7B308D)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h)(0x6A7B308D)
 I (..\Core\Inc\stm32f1xx_it.h)(0x6AB68742)
 F (../Core/Src/stm32f1xx_hal_msp.c)(0x6AB7B0A5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O3 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/Src-I./RTE/_RFID_RC522-I"D:/KEIL C/Pack/ARM/CMSIS/6.1.0/CMSIS/Core/Include"-I"D:/KEIL C/Pack/Keil/STM32F1xx_DFP/2.4.1/Device/Include"-D__UVISION_VERSION="540" -DSTM32F10X_MD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xB-o rfid_rc522/stm32f1xx_hal_msp.o -MMD)
-I (..\Core\Inc\main.h)(0x6AB9202E)
+I (..\Core\Inc\main.h)(0x6AB95187)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h)(0x6A7B308D)
 I (..\Core\Inc\stm32f1xx_hal_conf.h)(0x6AB7B0A5)
 I (..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h)(0x6A7B308D)

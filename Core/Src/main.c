@@ -17,7 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include  "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -163,7 +163,7 @@ static void RFID_Task(void)
         rfid_event_count++;
         reported_error = 0;
         RFID_PrintUID(&uid);
-        LED_Start(1, 1000);    /* one sustained light pulse = new UID event */
+        LED_Start(1, 2000);    /* one sustained light pulse = new UID event */
     }
     else if (st != RC522_NO_CARD && st != RC522_DUPLICATE)
     {
@@ -183,7 +183,7 @@ static void RFID_Task(void)
                 (unsigned)rfid_error_reg, (unsigned)rfid_error_len,
                 (unsigned)rfid_error_bits, (unsigned)rfid_error_registers_valid);
             UART_Print(text);
-          LED_Start(st == RC522_COLLISION ? 2 : 3, 120);
+          LED_Start(st == RC522_COLLISION ? 2 : 3, 150);
             reported_error = 1;
             last_report_ms = now;
         }
