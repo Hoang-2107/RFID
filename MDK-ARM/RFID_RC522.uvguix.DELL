@@ -3614,7 +3614,7 @@
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
-        <Name>..\..\Lib\lib\rc522.c</Name>
+        <Name>D:\STM32 file\Lib\lib\rc522.c</Name>
         <ColumnNumber>0</ColumnNumber>
         <TopLine>32</TopLine>
         <CurrentLine>63</CurrentLine>

@@ -281,7 +281,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Lib\lib\rc522.c</PathWithFileName>
+      <PathWithFileName>../Core/Src/rc522.c</PathWithFileName>
       <FilenameWithoutPath>rc522.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -293,7 +293,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\Lib\lib\rc522.h</PathWithFileName>
+      <PathWithFileName>../Core/Inc/rc522.h</PathWithFileName>
       <FilenameWithoutPath>rc522.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

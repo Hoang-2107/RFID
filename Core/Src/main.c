@@ -171,15 +171,19 @@ static void RFID_Task(void)
         now = HAL_GetTick();
         if (!reported_error || (uint32_t)(now - last_report_ms) >= 1500U)
         {
-            char text[160];
+          char text[192];
+          const char *detail = (st == RC522_COLLISION)
+            ? "multiple cards in field"
+            : "see reader status and debug registers";
             (void)snprintf(text, sizeof(text),
-                "ERROR=%s STAGE=%s CMD=%02X IRQ=%02X ERR=%02X FIFO=%u BIT=%u VALID=%u\r\n",
-                RC522_StatusString(st), RC522_DebugStageString(rfid_error_stage),
+            "ERROR=%s DETAIL=%s STAGE=%s CMD=%02X IRQ=%02X ERR=%02X FIFO=%u BIT=%u VALID=%u\r\n",
+            RC522_StatusString(st), detail,
+            RC522_DebugStageString(rfid_error_stage),
                 (unsigned)rfid_error_command, (unsigned)rfid_error_irq,
                 (unsigned)rfid_error_reg, (unsigned)rfid_error_len,
                 (unsigned)rfid_error_bits, (unsigned)rfid_error_registers_valid);
             UART_Print(text);
-            LED_Start(3, 120); /* generic error indication, NOT a numeric stage */
+          LED_Start(st == RC522_COLLISION ? 2 : 3, 120);
             reported_error = 1;
             last_report_ms = now;
         }
@@ -540,6 +544,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : BTN_MENU_Pin BTN_NEXT_Pin BTN_OK_Pin */
+  GPIO_InitStruct.Pin = BTN_MENU_Pin|BTN_NEXT_Pin|BTN_OK_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : RC522_CS_Pin */
   GPIO_InitStruct.Pin = RC522_CS_Pin;

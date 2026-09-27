@@ -100,7 +100,7 @@ RC522_Status RC522_GetVersion(RC522_Handle *d, uint8_t *version);
 RC522_Status RC522_RunSPIDiagnostic(RC522_Handle *d, RC522_SPITest *out);
 /* Selects one ISO14443A card, supporting 4/7/10-byte UID.
  * No duplicate filter; leaves the card selected for MIFARE authentication.
- * Multiple cards are not enumerated: collisions are returned as errors. */
+ * Multiple cards are not enumerated; RF collisions return RC522_COLLISION. */
 RC522_Status RC522_ReadUID(RC522_Handle *d, RC522_UID *uid);
 /* Reads + halts + filters duplicates. Poll continuously.
  * OK=new event, DUPLICATE=same UID held, NO_CARD=no response to REQA/WUPA.

@@ -2,6 +2,15 @@
 #include <string.h>
 #define RFCFG_REG  0x26
 #define TX_ASK_REG 0x15
+
+#define ERROR_WRITE          0x80
+#define ERROR_TEMPERATURE    0x40
+#define ERROR_BUFFER_OVERFLOW 0x10
+#define ERROR_COLLISION      0x08
+#define ERROR_CRC            0x04
+#define ERROR_PARITY         0x02
+#define ERROR_PROTOCOL       0x01
+
 /* MFRC522 registers used by this driver. */
 enum {
     COMMAND      = 0x01,
@@ -165,6 +174,20 @@ static RC522_Status clear_bits(
     value &= (uint8_t)~bits;
 
     return wr(d, reg, value);
+}
+
+static RC522_Status transceive_error_status(uint8_t error)
+{
+    if (error & ERROR_COLLISION)
+        return RC522_COLLISION;
+    if (error & ERROR_CRC)
+        return RC522_CRC_ERROR;
+    if (error & (ERROR_BUFFER_OVERFLOW | ERROR_PARITY | ERROR_PROTOCOL))
+        return RC522_PROTOCOL_ERROR;
+    if (error & (ERROR_WRITE | ERROR_TEMPERATURE))
+        return RC522_DEVICE_ERROR;
+
+    return RC522_OK;
 }
 
 static RC522_Status recover_rf(RC522_Handle *d)
@@ -343,6 +366,14 @@ static RC522_Status exchange(
     rc522_debug_registers_valid = 1;
     if (rx_len) *rx_len = fifo_count;
     if (rx_last_bits) *rx_last_bits = (uint8_t)(control & 0x07);
+
+    if (command == CMD_TRANSCEIVE &&
+        (result == RC522_OK || result == RC522_PROTOCOL_ERROR))
+    {
+        s = transceive_error_status(err);
+        if (s != RC522_OK)
+            result = s;
+    }
 
     /* Do not turn a timeout or frame error into a successful FIFO read. */
     if (result != RC522_OK)
