@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef  __MAIN_H
+#ifndef __MAIN_H
 #define __MAIN_H
 
 #ifdef __cplusplus

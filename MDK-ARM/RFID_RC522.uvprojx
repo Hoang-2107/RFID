@@ -405,6 +405,16 @@
               <FilePath>../Core/Inc/rc522.h</FilePath>
             </File>
             <File>
+              <FileName>rfid_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/rfid_app.c</FilePath>
+            </File>
+            <File>
+              <FileName>rfid_app.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../Core/Inc/rfid_app.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>

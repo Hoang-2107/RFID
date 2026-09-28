@@ -768,9 +768,6 @@ RC522_Status RC522_ReadUID(
 
     if (s == RC522_TIMEOUT)
     {
-        RC522_Status recover_status = recover_rf(d);
-        if (recover_status != RC522_OK)
-            return recover_status;
         return RC522_NO_CARD;
     }
 

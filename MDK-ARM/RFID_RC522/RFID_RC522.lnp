@@ -1,6 +1,7 @@
 --cpu Cortex-M3
 "rfid_rc522\startup_stm32f103xb.o"
 "rfid_rc522\rc522.o"
+"rfid_rc522\rfid_app.o"
 "rfid_rc522\main.o"
 "rfid_rc522\stm32f1xx_it.o"
 "rfid_rc522\stm32f1xx_hal_msp.o"
