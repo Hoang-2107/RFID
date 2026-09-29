@@ -2,6 +2,7 @@
 #include <string.h>
 #define RFCFG_REG  0x26
 #define TX_ASK_REG 0x15
+#define RC522_FIFO_CAPACITY 64U
 
 #define ERROR_WRITE          0x80
 #define ERROR_TEMPERATURE    0x40
@@ -190,6 +191,26 @@ static RC522_Status transceive_error_status(uint8_t error)
     return RC522_OK;
 }
 
+static RC522_Status exchange_cleanup(
+    RC522_Handle *d,
+    uint8_t command,
+    RC522_Status result)
+{
+    RC522_Status cleanup = wr(d, COMMAND, CMD_IDLE);
+
+    if (cleanup != RC522_OK)
+        return cleanup;
+
+    if (command == CMD_TRANSCEIVE)
+    {
+        cleanup = clear_bits(d, BIT_FRAMING, 0x80);
+        if (cleanup != RC522_OK)
+            return cleanup;
+    }
+
+    return result;
+}
+
 static RC522_Status recover_rf(RC522_Handle *d)
 {
     TRY(wr(d, COMMAND, CMD_IDLE));
@@ -198,7 +219,9 @@ static RC522_Status recover_rf(RC522_Handle *d)
     TRY(clear_bits(d, STATUS2, 0x08));
     TRY(clear_bits(d, TX_CONTROL, 0x03));
     HAL_Delay(2);
-    return set_bits(d, TX_CONTROL, 0x03);
+    TRY(set_bits(d, TX_CONTROL, 0x03));
+    HAL_Delay(5);
+    return RC522_OK;
 }
 
 
@@ -262,6 +285,8 @@ static int crc_ok(
 /* Core command exchange                                                      */
 /* -------------------------------------------------------------------------- */
 
+/* rx_len is an input capacity and an output FIFOLevel snapshot. Only bytes
+ * read after all validation are copied into rx. */
 static RC522_Status exchange(
     RC522_Handle *d,
     uint8_t command,
@@ -276,6 +301,7 @@ static RC522_Status exchange(
     uint8_t capacity = rx_len ? *rx_len : 0;
     RC522_Status result = RC522_TIMEOUT;
     RC522_Status s;
+    uint8_t cleanup_needed = 0;
 
     if (rx_len) *rx_len = 0;
     if (rx_last_bits) *rx_last_bits = 0;
@@ -293,25 +319,33 @@ static RC522_Status exchange(
     if (command == CMD_TRANSCEIVE && (!rx || !rx_len || !capacity))
         return RC522_BAD_ARG;
 
-    TRY(wr(d, COMMAND, CMD_IDLE));
-    TRY(wr(d, COM_IRQ, 0x7F));
-    TRY(wr(d, FIFO_LEVEL, 0x80));
-    TRY(wr(d, BIT_FRAMING, 0x00));
+    s = wr(d, COMMAND, CMD_IDLE);
+    if (s != RC522_OK) return s;
+    cleanup_needed = 1;
+
+    s = wr(d, COM_IRQ, 0x7F);
+    if (s != RC522_OK) goto exchange_fail;
+    s = wr(d, FIFO_LEVEL, 0x80);
+    if (s != RC522_OK) goto exchange_fail;
+    s = wr(d, BIT_FRAMING, 0x00);
+    if (s != RC522_OK) goto exchange_fail;
 
     for (uint8_t i = 0; i < tx_len; i++)
-        TRY(wr(d, FIFO_DATA, tx[i]));
+    {
+        s = wr(d, FIFO_DATA, tx[i]);
+        if (s != RC522_OK) goto exchange_fail;
+    }
 
-    TRY(wr(d, BIT_FRAMING, (uint8_t)(tx_last_bits & 0x07)));
-    TRY(wr(d, COMMAND, command));
+    s = wr(d, BIT_FRAMING, (uint8_t)(tx_last_bits & 0x07));
+    if (s != RC522_OK) goto exchange_fail;
+    s = wr(d, COMMAND, command);
+    if (s != RC522_OK) goto exchange_fail;
 
     if (command == CMD_TRANSCEIVE)
     {
         s = set_bits(d, BIT_FRAMING, 0x80);
         if (s != RC522_OK)
-        {
-            (void)wr(d, COMMAND, CMD_IDLE);
-            return s;
-        }
+            goto exchange_fail;
     }
 
     uint32_t start = HAL_GetTick();
@@ -344,12 +378,7 @@ static RC522_Status exchange(
     if (s == RC522_OK) s = rd(d, FIFO_LEVEL, &fifo_count);
     if (s == RC522_OK) s = rd(d, CONTROL, &control);
     if (s != RC522_OK)
-    {
-        (void)wr(d, COMMAND, CMD_IDLE);
-        if (command == CMD_TRANSCEIVE)
-            (void)clear_bits(d, BIT_FRAMING, 0x80);
-        return s;
-    }
+        goto exchange_fail;
 
     rc522_debug_error_reg = err;
     rc522_debug_rx_len = fifo_count;
@@ -359,53 +388,34 @@ static RC522_Status exchange(
     if (rx_len) *rx_len = fifo_count;
     if (rx_last_bits) *rx_last_bits = (uint8_t)(control & 0x07);
 
-    if (err != 0U)
+    if (result != RC522_IO_ERROR)
     {
-        if (err & ERROR_COLLISION)
-            result = RC522_COLLISION;
-        else if (err & ERROR_CRC)
-            result = RC522_CRC_ERROR;
-        else if (err & (ERROR_PARITY | ERROR_PROTOCOL | ERROR_BUFFER_OVERFLOW))
-            result = RC522_PROTOCOL_ERROR;
-        else if (err & ERROR_WRITE)
-            result = RC522_DEVICE_ERROR;
-        else if (err & ERROR_TEMPERATURE)
-            result = RC522_DEVICE_ERROR;
-        else
-            result = RC522_PROTOCOL_ERROR;
-    }
-    else if (command == CMD_TRANSCEIVE && fifo_count > capacity)
-    {
-        result = RC522_PROTOCOL_ERROR;
-    }
-    else if (result == RC522_TIMEOUT)
-    {
-        result = RC522_TIMEOUT;
-    }
-    else if (command == CMD_TRANSCEIVE && fifo_count == 0U)
-    {
-        result = RC522_PROTOCOL_ERROR;
+        RC522_Status error_status = transceive_error_status(err);
+        if (error_status != RC522_OK)
+            result = error_status;
+        else if (command == CMD_TRANSCEIVE &&
+                 (result == RC522_OK || (irq & 0x20U)))
+        {
+            if (fifo_count > RC522_FIFO_CAPACITY ||
+                fifo_count > capacity || fifo_count == 0U)
+                result = RC522_PROTOCOL_ERROR;
+            else
+                result = RC522_OK;
+        }
     }
 
     if (result != RC522_OK)
-    {
-        (void)wr(d, COMMAND, CMD_IDLE);
-        if (command == CMD_TRANSCEIVE)
-            (void)clear_bits(d, BIT_FRAMING, 0x80);
-        return result;
-    }
+        goto exchange_fail;
 
     if (command == CMD_MFAUTHENT)
-    {
-        (void)wr(d, COMMAND, CMD_IDLE);
-        return RC522_OK;
-    }
+        goto exchange_done;
 
-    if (fifo_count == 0U || fifo_count > capacity)
+    if (fifo_count == 0U ||
+        fifo_count > RC522_FIFO_CAPACITY ||
+        fifo_count > capacity)
     {
-        (void)wr(d, COMMAND, CMD_IDLE);
-        (void)clear_bits(d, BIT_FRAMING, 0x80);
-        return RC522_PROTOCOL_ERROR;
+        result = RC522_PROTOCOL_ERROR;
+        goto exchange_fail;
     }
 
     for (uint8_t i = 0; i < fifo_count; i++)
@@ -413,16 +423,22 @@ static RC522_Status exchange(
         s = rd(d, FIFO_DATA, &rx[i]);
         if (s != RC522_OK)
         {
-            (void)wr(d, COMMAND, CMD_IDLE);
-            (void)clear_bits(d, BIT_FRAMING, 0x80);
-            return RC522_IO_ERROR;
+            result = RC522_IO_ERROR;
+            goto exchange_fail;
         }
     }
 
-    TRY(wr(d, COMMAND, CMD_IDLE));
-    TRY(clear_bits(d, BIT_FRAMING, 0x80));
+exchange_done:
+    if (cleanup_needed)
+        return exchange_cleanup(d, command, RC522_OK);
 
     return RC522_OK;
+
+exchange_fail:
+    if (cleanup_needed)
+        return exchange_cleanup(d, command, (s != RC522_OK) ? s : result);
+
+    return (s != RC522_OK) ? s : result;
 }
 
 
@@ -543,12 +559,11 @@ TRY(set_bits(
 ));
 
 
-/* Tang c�ng su?t RF cho RC522 clone */
-TRY(wr(
-    d,
-    RFCFG_REG,
-    0x70
-));
+/* Set the receiver gain without overwriting reserved RFCfg bits. */
+uint8_t rfcfg = 0;
+TRY(rd(d, RFCFG_REG, &rfcfg));
+rfcfg = (uint8_t)((rfcfg & (uint8_t)~0x70U) | 0x70U);
+TRY(wr(d, RFCFG_REG, rfcfg));
 
 
 /* Enable 100% ASK */
@@ -725,6 +740,14 @@ static RC522_Status request_a(
     return RC522_OK;
 }
 
+static RC522_Status anticollision_cleanup(
+    RC522_Handle *d,
+    RC522_Status result)
+{
+    RC522_Status cleanup = set_bits(d, COLL, 0x80);
+    return cleanup == RC522_OK ? result : cleanup;
+}
+
 
 RC522_Status RC522_ReadUID(
     RC522_Handle *d,
@@ -815,32 +838,17 @@ RC522_Status RC522_ReadUID(
         );
 
         if (s != RC522_OK)
-        {
-            (void)set_bits(d, COLL, 0x80);
-            return s;
-        }
+            return anticollision_cleanup(d, s);
 
         if (rx_len != 5 || rx_last_bits != 0)
-        {
-            (void)set_bits(d, COLL, 0x80);
-            return RC522_PROTOCOL_ERROR;
-        }
+            return anticollision_cleanup(d, RC522_PROTOCOL_ERROR);
 
         rc522_debug_stage = RC522_DBG_BCC;
 
         if ((uint8_t)(rx[0] ^ rx[1] ^ rx[2] ^ rx[3]) != rx[4])
-        {
-            (void)set_bits(d, COLL, 0x80);
-            return RC522_PROTOCOL_ERROR;
-        }
+            return anticollision_cleanup(d, RC522_PROTOCOL_ERROR);
 
-        uint8_t cascade = (rx[0] == 0x88);
-
-        if (cascade && level == 2)
-        {
-            (void)set_bits(d, COLL, 0x80);
-            return RC522_PROTOCOL_ERROR;
-        }
+        uint8_t cascade = (level < 2U && rx[0] == 0x88);
 
         /*
          * SELECT is no longer the bitwise anticollision operation.
@@ -919,7 +927,9 @@ RC522_Status RC522_ReadUID(
         TRY(clear_bits(d, COLL, 0x80));
     }
 
-    (void)set_bits(d, COLL, 0x80);
+    s = set_bits(d, COLL, 0x80);
+    if (s != RC522_OK)
+        return s;
 
     return RC522_PROTOCOL_ERROR;
 }
@@ -997,7 +1007,9 @@ RC522_Status RC522_Poll(
     if (s != RC522_OK)
     {
         rc522_debug_stage = RC522_DBG_HALT;
-        (void)recover_rf(d);
+        RC522_Status recover_status = recover_rf(d);
+        if (recover_status != RC522_OK)
+            return recover_status;
         return s;
     }
 
