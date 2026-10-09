@@ -274,7 +274,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x8000000</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0xD800</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -420,6 +420,41 @@
               <FileName>OLED.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\OLED.c</FilePath>
+            </File>
+            <File>
+              <FileName>card_db.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/card_db.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>admin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/admin.c</FilePath>
+            </File>
+            <File>
+              <FileName>attlog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/attlog.c</FilePath>
+            </File>
+            <File>
+              <FileName>attendance.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/attendance.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/rtc_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/uart_cmd.c</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>

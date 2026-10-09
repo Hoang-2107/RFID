@@ -37,14 +37,14 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
 #define APP_DEMO_MODE      0
- 
-#define RESULT_SHOW_MS     3000u
+/* USER CODE END PTD */
+
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+
+#define RESULT_SHOW_MS     3000u
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -62,9 +62,10 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-/* USER CODE END PV */
 extern volatile RC522_UID rfid_last_uid;
 extern volatile uint32_t  rfid_event_count;
+/* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -73,15 +74,13 @@ static void MX_USART1_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 /* USER CODE BEGIN PFP */
-static void App_LoadSampleCards(void);
 static void Uid_To_HexStr(const uint8_t *uid, uint8_t uid_len, char *out, size_t out_size);
-static void App_Log(const char *s);
 static void App_ShowIdle(void);
 static void App_ShowCardResult(const uint8_t *uid, uint8_t uid_len);
-#if APP_DEMO_MODE
-static void App_RunDemo(void);
-#endif
 /* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
 /* Chuyen UID dang byte sang chuoi hex, vd {0x12,0x34} -> "1234" */
 static void Uid_To_HexStr(const uint8_t *uid, uint8_t uid_len, char *out, size_t out_size)
 {
@@ -145,8 +144,8 @@ static void App_ShowCardResult(const uint8_t *uid, uint8_t uid_len)
     char log[128];
     char id[12] = "-";
     AttLogResult res;
-    AttTime t;
- 
+    AttTime t = {0};
+
     Uid_To_HexStr(uid, uid_len, uid_str, sizeof(uid_str));
     rtc_clock_format(rtc_clock_now(), ts, sizeof(ts));
     ts[10] = ',';                                   /* tach cot ngay, gio */
@@ -199,9 +198,9 @@ static void App_ShowCardResult(const uint8_t *uid, uint8_t uid_len)
                    attlog_result_str((uint8_t)res));
     uart_cmd_print(log);
 }
- 
+
 /* USER CODE END 0 */
- 
+
 /**
   * @brief  The application entry point.
   * @retval int
@@ -338,11 +337,6 @@ int main(void)
   }
   /* USER CODE END 3 */
 }
-    /* USER CODE BEGIN 3 */
-    // RFID_App_Task();
-    // HAL_Delay(1);
-  
-  /* USER CODE END 3 */
 
 
 /**
@@ -455,7 +449,11 @@ static void MX_RTC_Init(void)
   }
 
   /* USER CODE BEGIN Check_RTC_BKUP */
-
+  /* Gio da duoc dat (qua lenh TIME) -> giu nguyen bo dem RTC, khong reset ve 0 */
+  if (HAL_RTCEx_BKUPRead(&hrtc, RTC_CLOCK_BKP_REG) == RTC_CLOCK_MAGIC)
+  {
+    return;
+  }
   /* USER CODE END Check_RTC_BKUP */
 
   /** Initialize RTC and set the Time and Date

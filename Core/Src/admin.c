@@ -245,6 +245,19 @@ static void show_msg(const char *l1, const char *l2, const char *l3, AdmState af
 
 /* ========================== Xu ly ========================== */
 
+/* Tim ID lon nhat trong nhat ky (bo qua ban ghi UNKNOWN vi card_id la UID) */
+static void max_log_id_visitor(const AttLogRecord *rec, void *ctx)
+{
+    uint32_t *max_id = (uint32_t *)ctx;
+    if ((rec->result != (uint8_t)ATTLOG_UNKNOWN) && (rec->card_id > *max_id))
+    {
+        *max_id = rec->card_id;
+    }
+}
+
+/* ID moi = lon hon moi ID dang co VA moi ID con trong nhat ky Flash.
+ * Neu chi xet card_db, xoa the co ID lon nhat roi them the moi se cap lai
+ * ID cu -> ban ghi cu trong LOG bi gan nham ten nguoi moi. */
 static uint32_t next_card_id(void)
 {
     uint32_t max_id = ADMIN_FIRST_CARD_ID - 1u;
@@ -253,6 +266,7 @@ static uint32_t next_card_id(void)
         const CardEntry *e = card_db_get_at(i);
         if ((e != NULL) && (e->card_id > max_id)) max_id = e->card_id;
     }
+    attlog_foreach(max_log_id_visitor, &max_id);
     return max_id + 1u;
 }
 
@@ -359,8 +373,10 @@ void admin_on_card(const uint8_t *uid, uint8_t uid_len)
         }
         else
         {
-            (void)snprintf(line, sizeof(line), "ID %lu", (unsigned long)e->card_id);
-            ok = card_db_remove_by_uid(uid, uid_len) && flash_store_save();   /* e khong dung sau dong nay */
+            uint32_t del_id = e->card_id;          /* e khong dung duoc sau khi xoa */
+            (void)snprintf(line, sizeof(line), "ID %lu", (unsigned long)del_id);
+            ok = card_db_remove_by_uid(uid, uid_len) && flash_store_save();
+            attendance_remove(del_id);             /* bo khoi danh sach co mat hom nay */
             show_msg(ok ? "CARD DELETED" : "SAVE FAILED", line, hex, ST_WAIT_CARD);
         }
         break;
@@ -474,6 +490,7 @@ bool admin_task(void)
         if (ev & EV_OK)
         {
             card_db_clear();
+            attendance_clear();                    /* khong con the nao -> khong ai co mat */
             bool ok = flash_store_save();
             show_msg(ok ? "ALL CARDS ERASED" : "SAVE FAILED", NULL, NULL, ST_MENU);
         }
