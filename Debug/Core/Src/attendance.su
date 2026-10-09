@@ -1,0 +1,13 @@
+../Core/Src/attendance.c:24:13:to_att_time	24	static
+../Core/Src/attendance.c:32:12:att_index	24	static
+../Core/Src/attendance.c:42:13:roll_day	24	static
+../Core/Src/attendance.c:52:13:add_record	16	static
+../Core/Src/attendance.c:60:6:attendance_init	8	static
+../Core/Src/attendance.c:66:6:attendance_clear	8	static
+../Core/Src/attendance.c:72:13:restore_visitor	24	static
+../Core/Src/attendance.c:82:6:attendance_restore_from_log	16	static
+../Core/Src/attendance.c:91:6:attendance_now	16	static
+../Core/Src/attendance.c:96:11:attendance_check_in	24	static
+../Core/Src/attendance.c:118:6:attendance_get	24	static
+../Core/Src/attendance.c:127:9:attendance_count	8	static
+../Core/Src/attendance.c:133:6:attendance_remove	24	static

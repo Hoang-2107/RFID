@@ -22,14 +22,26 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "rfid_app.h"
-
+#include <string.h>
+#include <stdio.h>
+#include "OLED.h"
+#include "rc522.h"
+#include "card_db.h"
+#include "admin.h"
+#include "flash.h"
+#include "attlog.h"
+#include "rtc_clock.h"
+#include "uart_cmd.h"
+#include "attendance.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
-
+#define APP_DEMO_MODE      0
+ 
+#define RESULT_SHOW_MS     3000u
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
@@ -51,7 +63,8 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 /* USER CODE END PV */
-
+extern volatile RC522_UID rfid_last_uid;
+extern volatile uint32_t  rfid_event_count;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -60,40 +73,165 @@ static void MX_USART1_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 /* USER CODE BEGIN PFP */
-
+static void App_LoadSampleCards(void);
+static void Uid_To_HexStr(const uint8_t *uid, uint8_t uid_len, char *out, size_t out_size);
+static void App_Log(const char *s);
+static void App_ShowIdle(void);
+static void App_ShowCardResult(const uint8_t *uid, uint8_t uid_len);
+#if APP_DEMO_MODE
+static void App_RunDemo(void);
+#endif
 /* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
+/* Chuyen UID dang byte sang chuoi hex, vd {0x12,0x34} -> "1234" */
+static void Uid_To_HexStr(const uint8_t *uid, uint8_t uid_len, char *out, size_t out_size)
+{
+    size_t offset = 0;
+ 
+    if ((out == NULL) || (out_size == 0u)) return;
+    for (uint8_t i = 0; (uid != NULL) && (i < uid_len) && (offset + 2u < out_size); i++)
+    {
+        offset += (size_t)snprintf(out + offset, out_size - offset, "%02X", uid[i]);
+    }
+    out[offset] = '\0';
+}
+ 
+/* Man hinh cho (ve lai moi giay de cap nhat dong ho) */
+static void App_ShowIdle(void)
+{
+    OLED_Clear();
+    OLED_PrintCenter(0, "RFID ATTENDANCE");
+ 
+    if (rtc_clock_is_set())
+    {
+        RtcDateTime dt;
+        rtc_clock_to_datetime(rtc_clock_now(), &dt);
+        OLED_Printf(1, " %02u/%02u/%04u %02u:%02u:%02u",
+                    (unsigned)dt.day, (unsigned)dt.month, (unsigned)dt.year,
+                    (unsigned)dt.hour, (unsigned)dt.minute, (unsigned)dt.second);
+    }
+    else
+    {
+        OLED_PrintCenter(1, "CLOCK NOT SET");
+    }
+ 
+    OLED_Printf(2, "Cards: %u  Admins: %u",
+                (unsigned)card_db_count(), (unsigned)admin_get_count());
+    OLED_Printf(3, "Present: %u/%u",
+                (unsigned)attendance_count(), (unsigned)card_db_count());
+    OLED_Printf(4, "Log: %u/%u",
+                (unsigned)attlog_count(), (unsigned)attlog_capacity());
+ 
+    if (admin_get_count() == 0u)
+    {
+        OLED_PrintCenter(6, "NO ADMIN CARD");
+        OLED_PrintCenter(7, "Press MENU to setup");
+    }
+    else
+    {
+        OLED_PrintCenter(6, "Scan card to check in");
+    }
+    (void)OLED_Update();
+}
+ 
+/* Cham the nguoi dung = DIEM DANH:
+ *   - hien ket qua len OLED
+ *   - ghi nhat ky Flash (attlog) kem thoi gian RTC
+ *   - gui 1 dong CSV qua UART:  ATT,<date>,<time>,<id>,"<ten>",<uid>,<ket qua> */
+static void App_ShowCardResult(const uint8_t *uid, uint8_t uid_len)
+{
+    const CardEntry *entry = card_db_find_by_uid(uid, uid_len);
+    char uid_str[2u * CARD_UID_MAX_LEN + 1u];
+    char ts[24];
+    char log[128];
+    char id[12] = "-";
+    AttLogResult res;
+    AttTime t;
+ 
+    Uid_To_HexStr(uid, uid_len, uid_str, sizeof(uid_str));
+    rtc_clock_format(rtc_clock_now(), ts, sizeof(ts));
+    ts[10] = ',';                                   /* tach cot ngay, gio */
+ 
+    OLED_Clear();
+    if (entry == NULL)
+    {
+        res = ATTLOG_UNKNOWN;
+        OLED_PrintCenter(0, "UNKNOWN CARD");
+        OLED_PrintCenter(2, "Not registered");
+    }
+    else
+    {
+        (void)snprintf(id, sizeof(id), "%lu", (unsigned long)entry->card_id);
+        if (!entry->enabled)
+        {
+            res = ATTLOG_LOCKED;
+            OLED_PrintCenter(0, "CARD LOCKED");
+            OLED_PrintCenter(2, entry->name);
+            OLED_PrintCenter(4, "Contact admin");
+        }
+        else
+        {
+            AttResult r = attendance_check_in(entry->card_id, &t);
+            res = (r == ATT_CHECKED_IN) ? ATTLOG_OK : ATTLOG_AGAIN;
+            OLED_PrintCenter(0, (r == ATT_CHECKED_IN) ? "CHECK-IN OK" : "ALREADY CHECKED");
+            OLED_PrintCenter(2, entry->name);
+            OLED_Printf(3, "ID: %s", id);
+            OLED_Printf(4, "Time: %02u:%02u:%02u",
+                        (unsigned)t.hours, (unsigned)t.minutes, (unsigned)t.seconds);
+        }
+    }
+ 
+    /* Ghi nhat ky Flash (quet lai trong ngay thi bo qua neu ATTLOG_SAVE_REPEAT = 0) */
+    if ((res != ATTLOG_AGAIN) || ATTLOG_SAVE_REPEAT)
+    {
+        if (!attlog_append(res, (entry != NULL) ? entry->card_id : 0u, uid, uid_len))
+        {
+            uart_cmd_print("ERR: log write failed\r\n");
+        }
+    }
+ 
+    OLED_Printf(6, "Present: %u/%u",
+                (unsigned)attendance_count(), (unsigned)card_db_count());
+    OLED_Printf(7, "UID:%s", uid_str);
+    (void)OLED_Update();
+ 
+    (void)snprintf(log, sizeof(log), "ATT,%s,%s,\"%s\",%s,%s\r\n",
+                   ts, id, (entry != NULL) ? entry->name : "", uid_str,
+                   attlog_result_str((uint8_t)res));
+    uart_cmd_print(log);
+}
+ 
 /* USER CODE END 0 */
-
+ 
 /**
   * @brief  The application entry point.
   * @retval int
   */
 int main(void)
 {
-
+ 
   /* USER CODE BEGIN 1 */
-
+  uint32_t last_event = 0;
+  uint32_t result_until = 0;
+  uint32_t last_clock_sec = 0;
+  uint8_t  showing_result = 0;
   /* USER CODE END 1 */
-
+ 
   /* MCU Configuration--------------------------------------------------------*/
-
+ 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
+ 
   /* USER CODE BEGIN Init */
-
+ 
   /* USER CODE END Init */
-
+ 
   /* Configure the system clock */
   SystemClock_Config();
-
+ 
   /* USER CODE BEGIN SysInit */
-
+  HAL_Delay(2000);   /* cho OLED va RC522 on dinh nguon */
   /* USER CODE END SysInit */
-
+ 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
@@ -101,21 +239,111 @@ int main(void)
   MX_I2C1_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-    RFID_App_Init(&hspi1, &huart1);
+  uart_cmd_init(&huart1);
+  if (!OLED_Init(&hi2c1))
+  {
+      uart_cmd_print("OLED init FAILED\r\n");
+  }
+ 
+  /* Thu tu khoi tao quan trong: the/admin -> dong ho -> nhat ky -> diem danh */
+  card_db_init();
+  admin_init();
+  if (!flash_store_load())
+  {
+      uart_cmd_print("FLASH: no card data, press MENU to add first admin card\r\n");
+  }
+  rtc_clock_init(&hrtc);
+  attlog_init();
+  attendance_init();
+  attendance_restore_from_log();     /* mat dien giua buoi van giu danh sach co mat */
+ 
+  {
+      char buf[96];
+      char ts[24];
+      rtc_clock_format(rtc_clock_now(), ts, sizeof(ts));
+      (void)snprintf(buf, sizeof(buf), "BOOT: cards=%u log=%u/%u time=%s%s\r\n",
+                     (unsigned)card_db_count(), (unsigned)attlog_count(),
+                     (unsigned)attlog_capacity(), ts,
+                     rtc_clock_is_set() ? "" : " (NOT SET: TIME YYYY-MM-DD HH:MM:SS)");
+      uart_cmd_print(buf);
+  }
+ 
+  RFID_App_Init(&hspi1, &huart1);
+ 
+  App_ShowIdle();
+  last_event = rfid_event_count;
+  last_clock_sec = rtc_clock_now();
   /* USER CODE END 2 */
-
+ 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-
+ 
     /* USER CODE BEGIN 3 */
-    RFID_App_Task();
-    HAL_Delay(1);
+    RFID_App_Task();   /* quet RC522 (khong chan), cap nhat rfid_last_uid */
+    uart_cmd_task();   /* lenh UART: TIME, LOG, LIST, NAME, STAT... */
+ 
+    /* Nut bam + menu admin; tra true khi vua thoat che do admin */
+    if (admin_task())
+    {
+        showing_result = 0;
+        App_ShowIdle();
+    }
+ 
+    /* Co the moi duoc quet */
+    if (rfid_event_count != last_event)
+    {
+        RC522_UID uid;
+ 
+        last_event = rfid_event_count;
+        uid.size = rfid_last_uid.size;
+        if (uid.size > sizeof(uid.bytes)) uid.size = sizeof(uid.bytes);
+        for (uint8_t i = 0; i < uid.size; i++) uid.bytes[i] = rfid_last_uid.bytes[i];
+ 
+        if (admin_is_active())
+        {
+            admin_on_card(uid.bytes, uid.size);          /* dang o menu admin */
+        }
+        else if (admin_is_admin_uid(uid.bytes, uid.size))
+        {
+            showing_result = 0;
+            uart_cmd_print("ADMIN: login\r\n");
+            admin_enter();                               /* the admin -> vao menu */
+        }
+        else
+        {
+            App_ShowCardResult(uid.bytes, uid.size);     /* the nguoi dung -> diem danh */
+            result_until = HAL_GetTick() + RESULT_SHOW_MS;
+            showing_result = 1;
+        }
+    }
+ 
+    if (!admin_is_active())
+    {
+        /* Het thoi gian hien ket qua -> ve man hinh cho */
+        if (showing_result && (int32_t)(HAL_GetTick() - result_until) >= 0)
+        {
+            showing_result = 0;
+            App_ShowIdle();
+        }
+        /* Man hinh cho: cap nhat dong ho moi giay */
+        else if (!showing_result && (rtc_clock_now() != last_clock_sec))
+        {
+            last_clock_sec = rtc_clock_now();
+            App_ShowIdle();
+        }
+    }
   }
   /* USER CODE END 3 */
 }
+    /* USER CODE BEGIN 3 */
+    // RFID_App_Task();
+    // HAL_Delay(1);
+  
+  /* USER CODE END 3 */
+
 
 /**
   * @brief System Clock Configuration
@@ -134,7 +362,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -144,12 +374,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }

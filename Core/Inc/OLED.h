@@ -30,6 +30,7 @@ bool OLED_Init(I2C_HandleTypeDef *hi2c);
 bool OLED_IsReady(void);
 bool OLED_Update(void);                 /* day framebuffer ra man hinh */
 
+
 void OLED_Clear(void);
 void OLED_ClearRow(uint8_t row);
 void OLED_SetCursor(uint8_t x_px, uint8_t row);
@@ -47,6 +48,7 @@ void OLED_DisplayOn(bool on);
 
 
 #ifdef __cplusplus
+
 }
 #endif
 

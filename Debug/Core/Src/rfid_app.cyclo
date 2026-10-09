@@ -1,0 +1,8 @@
+../Core/Src/rfid_app.c:27:13:UART_Print	2
+../Core/Src/rfid_app.c:36:13:RFID_PrintUID	4
+../Core/Src/rfid_app.c:51:13:LED_Start	2
+../Core/Src/rfid_app.c:61:13:LED_Task	4
+../Core/Src/rfid_app.c:74:13:SaveError	1
+../Core/Src/rfid_app.c:86:13:RFID_Task	9
+../Core/Src/rfid_app.c:135:6:RFID_App_Init	5
+../Core/Src/rfid_app.c:200:6:RFID_App_Task	1

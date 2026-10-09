@@ -1,0 +1,8 @@
+../Core/Src/rfid_app.c:27:13:UART_Print	24	static
+../Core/Src/rfid_app.c:36:13:RFID_PrintUID	88	static
+../Core/Src/rfid_app.c:51:13:LED_Start	16	static
+../Core/Src/rfid_app.c:61:13:LED_Task	16	static
+../Core/Src/rfid_app.c:74:13:SaveError	16	static
+../Core/Src/rfid_app.c:86:13:RFID_Task	280	static
+../Core/Src/rfid_app.c:135:6:RFID_App_Init	176	static
+../Core/Src/rfid_app.c:200:6:RFID_App_Task	8	static

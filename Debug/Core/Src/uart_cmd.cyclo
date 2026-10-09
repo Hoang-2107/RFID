@@ -1,0 +1,16 @@
+../Core/Src/uart_cmd.c:32:6:HAL_UART_RxCpltCallback	3
+../Core/Src/uart_cmd.c:45:6:HAL_UART_ErrorCallback	2
+../Core/Src/uart_cmd.c:54:6:uart_cmd_print	2
+../Core/Src/uart_cmd.c:62:13:uid_to_hex	3
+../Core/Src/uart_cmd.c:73:13:format_csv_time	2
+../Core/Src/uart_cmd.c:81:13:allowed	3
+../Core/Src/uart_cmd.c:92:13:cmd_help	1
+../Core/Src/uart_cmd.c:106:13:cmd_time	6
+../Core/Src/uart_cmd.c:133:13:log_visitor	4
+../Core/Src/uart_cmd.c:175:13:cmd_log	5
+../Core/Src/uart_cmd.c:198:13:cmd_list	5
+../Core/Src/uart_cmd.c:226:13:cmd_name	9
+../Core/Src/uart_cmd.c:257:13:cmd_stat	2
+../Core/Src/uart_cmd.c:272:13:execute	20
+../Core/Src/uart_cmd.c:304:6:uart_cmd_init	1
+../Core/Src/uart_cmd.c:313:6:uart_cmd_task	12

@@ -1,0 +1,13 @@
+../Core/Src/rtc_clock.c:14:13:is_leap	4
+../Core/Src/rtc_clock.c:19:16:days_in_month	3
+../Core/Src/rtc_clock.c:25:13:rtc_wait_rtoff	3
+../Core/Src/rtc_clock.c:35:6:rtc_clock_init	1
+../Core/Src/rtc_clock.c:40:10:rtc_clock_now	2
+../Core/Src/rtc_clock.c:54:6:rtc_clock_set	4
+../Core/Src/rtc_clock.c:70:6:rtc_clock_is_set	3
+../Core/Src/rtc_clock.c:75:6:rtc_clock_to_datetime	5
+../Core/Src/rtc_clock.c:101:6:rtc_clock_from_datetime	13
+../Core/Src/rtc_clock.c:122:13:read_num	4
+../Core/Src/rtc_clock.c:136:13:expect	2
+../Core/Src/rtc_clock.c:143:6:rtc_clock_parse	14
+../Core/Src/rtc_clock.c:168:6:rtc_clock_format	1

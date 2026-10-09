@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+
+    "tasks": [
+        {
+            "label": "1. Clean Build RFID",
+            "type": "shell",
+            "command": "C:\\Users\\PC\\AppData\\Local\\stm32cube\\bundles\\ninja\\1.13.2+st.1\\bin\\ninja.exe",
+            "args": [
+                "-C",
+                "${workspaceFolder}/build/Debug",
+                "-t",
+                "clean"
+            ],
+            "problemMatcher": []
+        },
+
+        {
+            "label": "2. Build RFID",
+            "type": "shell",
+            "command": "C:\\Users\\PC\\AppData\\Local\\stm32cube\\bundles\\ninja\\1.13.2+st.1\\bin\\ninja.exe",
+            "args": [
+                "-C",
+                "${workspaceFolder}/build/Debug",
+                "-v"
+            ],
+            "problemMatcher": "$gcc"
+        },
+
+        {
+            "label": "3. Flash STM32",
+            "type": "shell",
+            "command": "C:\\Program Files\\STMicroelectronics\\STM32Cube\\STM32CubeProgrammer\\bin\\STM32_Programmer_CLI.exe",
+            "args": [
+                "-c",
+                "port=SWD",
+                "mode=UR",
+                "freq=100",
+                "-w",
+                "${workspaceFolder}/build/Debug/RFID_RC522.elf",
+                "-v",
+                "-rst"
+            ],
+            "problemMatcher": []
+        },
+
+        {
+            "label": "Build + Flash RFID",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "1. Clean Build RFID",
+                "2. Build RFID",
+                "3. Flash STM32"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

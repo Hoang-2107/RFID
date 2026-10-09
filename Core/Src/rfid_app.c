@@ -162,11 +162,7 @@ void RFID_App_Init(SPI_HandleTypeDef *spi, UART_HandleTypeDef *uart)
     {
         rfid_error_status = (rfid_init_status != RC522_OK)
             ? rfid_init_status : version_status;
-        while (1)
-        {
-            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-            HAL_Delay(150);
-        }
+        
     }
 
     RC522_SPITest spi_result;
@@ -182,14 +178,14 @@ void RFID_App_Init(SPI_HandleTypeDef *spi, UART_HandleTypeDef *uart)
         (unsigned)spi_result.io_errors);
     UART_Print(text);
 
-    if (spi_status != RC522_OK)
-    {
-        while (1)
-        {
-            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-            HAL_Delay(150);
-        }
-    }
+    // if (spi_status != RC522_OK)
+    // {
+    //     while (1)
+    //     {
+    //         HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    //         HAL_Delay(150);
+    //     }
+    // }
 
     for (uint8_t i = 0; i < 2; i++)
     {

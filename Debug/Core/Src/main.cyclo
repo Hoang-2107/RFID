@@ -1,0 +1,11 @@
+../Core/Src/main.c:86:13:Uid_To_HexStr	6
+../Core/Src/main.c:99:13:App_ShowIdle	3
+../Core/Src/main.c:140:13:App_ShowCardResult	8
+../Core/Src/main.c:209:5:main	15
+../Core/Src/main.c:352:6:SystemClock_Config	4
+../Core/Src/main.c:399:13:MX_I2C1_Init	2
+../Core/Src/main.c:433:13:MX_RTC_Init	4
+../Core/Src/main.c:491:13:MX_SPI1_Init	2
+../Core/Src/main.c:529:13:MX_USART1_UART_Init	2
+../Core/Src/main.c:562:13:MX_GPIO_Init	1
+../Core/Src/main.c:626:6:Error_Handler	1

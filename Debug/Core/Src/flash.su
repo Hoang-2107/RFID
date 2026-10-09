@@ -1,0 +1,11 @@
+../Core/Src/flash.c:70:17:crc32_update	32	static
+../Core/Src/flash.c:84:13:pack_card	16	static
+../Core/Src/flash.c:98:13:pack_admin	24	static
+../Core/Src/flash.c:112:17:ram_crc	80	static
+../Core/Src/flash.c:132:24:flash_header_valid	24	static
+../Core/Src/flash.c:148:13:flash_erase_area	32	static
+../Core/Src/flash.c:161:13:flash_program	40	static
+../Core/Src/flash.c:177:6:flash_store_has_data	8	static
+../Core/Src/flash.c:182:6:flash_store_load	72	static
+../Core/Src/flash.c:210:6:flash_store_save	120	static
+../Core/Src/flash.c:264:6:flash_store_erase	16	static

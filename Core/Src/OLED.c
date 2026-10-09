@@ -2,7 +2,7 @@
  * @file    oled.c
  * @brief   Driver SSD1306/SH1106 I2C
  */
-#include "oled.h"
+#include "OLED.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
